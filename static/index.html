@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kinetic Feed — Autonomous Social AI Command & PulsePilot AI™</title>
+  <meta name="description" content="Next-generation autonomous social media marketing platform powered by Google Gemini Vision. Crack the algorithm and deploy PulsePilot AI across Instagram, X, and Threads." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body class="cyber-void">
+
+  <!-- SVG FILTERS FOR LIQUID LOGO & GLASS REFRACTION -->
+  <svg style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="liquid-displacement">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04 0.07" numOctaves="3" result="noise">
+          <animate attributeName="baseFrequency" dur="12s" values="0.04 0.07; 0.05 0.09; 0.04 0.07" repeatCount="indefinite" />
+        </feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="9" xChannelSelector="R" yChannelSelector="G" result="displaced" />
+        <feGaussianBlur in="displaced" stdDeviation="0.4" result="blurred" />
+        <feMerge>
+          <feMergeNode in="displaced" />
+          <feMergeNode in="SourceGraphic" />
+        </feMerge>
+      </filter>
+    </defs>
+  </svg>
+
+  <!-- INTERACTIVE PARALLAX AURORA MESH CANVAS -->
+  <div class="parallax-container" id="parallax-root">
+    <div class="aurora-orb orb-1" id="orb-1"></div>
+    <div class="aurora-orb orb-2" id="orb-2"></div>
+    <div class="aurora-orb orb-3" id="orb-3"></div>
+    <div class="grain-overlay"></div>
+  </div>
+
+  <div class="app-shell">
+    <!-- MASTER NAVIGATION BAR -->
+    <header class="master-header glass-card">
+      <div class="brand-cluster" onclick="switchView('home')" style="cursor: pointer;">
+        <!-- LIQUID LOGO EMBLEM -->
+        <div class="liquid-logo-wrap" title="Kinetic Feed Engine">
+          <div class="liquid-logo-core">
+            <svg class="liquid-svg" width="34" height="34" viewBox="0 0 100 100">
+              <defs>
+                <linearGradient id="liquid-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#00f2fe" />
+                  <stop offset="50%" stop-color="#4facfe" />
+                  <stop offset="100%" stop-color="#7928ca" />
+                </linearGradient>
+              </defs>
+              <path class="liquid-shape" filter="url(#liquid-displacement)" fill="url(#liquid-grad)" d="M50,15 C72,15 86,28 86,50 C86,72 70,85 50,85 C28,85 14,72 14,50 C14,28 28,15 50,15 Z"></path>
+              <circle cx="50" cy="50" r="14" fill="#ffffff" opacity="0.95" />
+              <polygon points="46,42 58,50 46,58" fill="#0b0e17" />
+            </svg>
+          </div>
+          <div class="emblem-halo"></div>
+        </div>
+
+        <div class="brand-meta">
+          <div class="brand-title">KINETIC FEED</div>
+          <div class="brand-sub">AUTONOMOUS MULTI-PLATFORM SOCIAL ENGINE</div>
+        </div>
+      </div>
+
+      <!-- NAVIGATION TABS -->
+      <nav class="nav-links">
+        <button class="nav-link-btn active" id="nav-home-btn" onclick="switchView('home')">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <span>Overview</span>
+        </button>
+        <button class="nav-link-btn" id="nav-tools-btn" onclick="scrollToTools()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+          <span>Tools Hub</span>
+        </button>
+        <button class="nav-link-btn highlight-tab" id="nav-workspace-btn" onclick="switchView('workspace')">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M9 3v18M3 9h18"></path></svg>
+          <span>Command Center</span>
+        </button>
+      </nav>
+
+      <div class="header-actions">
+        <!-- THEME TOGGLE BUTTON (DARK / LIGHT) -->
+        <button class="btn-glass theme-toggle-btn" id="theme-toggle-btn" onclick="toggleTheme()" title="Toggle Dark / Light Theme">
+          <span class="theme-icon theme-sun">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg>
+          </span>
+          <span class="theme-icon theme-moon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>
+          </span>
+        </button>
+
+        <!-- STREAM STATUS INDICATOR -->
+        <div class="pill-badge pill-stream" id="sse-indicator">
+          <span class="pulse-indicator pulse-emerald" id="sse-dot"></span>
+          <span class="font-mono text-xs" id="sse-status-label">STREAM LIVE</span>
+        </div>
+
+        <button class="btn-glass icon-btn" id="open-settings-btn" title="System Settings">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- ================================================================= -->
+    <!-- VIEW 1: HOME PAGE (HERO + TOOLS HUB + FOOTER)                      -->
+    <!-- ================================================================= -->
+    <main id="view-home" class="view-container active">
+      <!-- HERO SECTION -->
+      <section class="hero-section">
+        <div class="hero-badge font-mono">
+          <span class="hero-badge-pip"></span>
+          <span>AUTONOMOUS MULTIMODAL ALGORITHM CRACKING</span>
+        </div>
+
+        <h1 class="hero-title">
+          Crack Social Algorithms with <br />
+          <span class="text-gradient-hero">PulsePilot AI™</span>
+        </h1>
+
+        <p class="hero-subtitle">
+          Engineered for creators, growth hackers, and brands. PulsePilot AI analyzes viral velocity, avoids low-engagement traps, and submits multimodal vision comments that claim top-ranked placement across Instagram, X (Twitter), and Meta Threads.
+        </p>
+
+        <div class="hero-cta-row">
+          <button class="btn-launch-glow btn-hero-primary" onclick="switchView('workspace')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            <span>Launch PulsePilot AI™</span>
+          </button>
+          <button class="btn-glass btn-hero-secondary" onclick="scrollToTools()">
+            <span>Explore Tools Hub ↓</span>
+          </button>
+        </div>
+
+        <!-- HERO KPI STRIP -->
+        <div class="hero-kpi-grid">
+          <div class="hero-kpi-card glass-card">
+            <div class="kpi-val text-gradient-cyan" id="hero-analyzed-val">32+</div>
+            <div class="kpi-lbl font-mono">POSTS SCANNED & EVALUATED</div>
+          </div>
+          <div class="hero-kpi-card glass-card">
+            <div class="kpi-val text-gradient-violet" id="hero-comments-val">24+</div>
+            <div class="kpi-lbl font-mono">VERIFIED LIVE SUBMISSIONS</div>
+          </div>
+          <div class="hero-kpi-card glass-card">
+            <div class="kpi-val text-gradient-amber" id="hero-reach-val">3.88x</div>
+            <div class="kpi-lbl font-mono">ORGANIC REACH MULTIPLIER</div>
+          </div>
+          <div class="hero-kpi-card glass-card">
+            <div class="kpi-val text-gradient-emerald">0ms</div>
+            <div class="kpi-lbl font-mono">REAL-TIME SSE EVENT LATENCY</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TOOLS HUB SECTION -->
+      <section class="tools-hub-section" id="tools-hub">
+        <div class="section-header-cluster">
+          <div class="section-sub-title font-mono">INTELLIGENCE SUITE</div>
+          <h2 class="section-title">Autonomous Marketing Tools</h2>
+          <p class="section-desc">
+            Next-generation autonomous agents built on Gemini Vision and high-velocity platform reverse-engineering.
+          </p>
+        </div>
+
+        <div class="tools-grid">
+          <!-- FLAGSHIP TOOL 1: PULSEPILOT AI (ACTIVE) -->
+          <div class="tool-card glass-card flagship-card">
+            <div class="tool-card-head">
+              <div class="tool-icon-wrap tool-pulse">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+              </div>
+              <div class="tool-status-badge badge-active font-mono">● ACTIVE SUITE</div>
+            </div>
+
+            <div class="tool-title-wrap">
+              <h3 class="tool-name">PulsePilot AI™</h3>
+              <div class="tool-tagline">Autonomous Vision Commenter & Algorithm Cracker</div>
+            </div>
+
+            <p class="tool-desc">
+              Continuously scans Instagram, Twitter/X, and Threads feeds. Calculates real-time post velocity (likes/hr), checks saturation ceilings, and uses Gemini 3.6 Vision to inspect visual context before publishing sharp, high-engagement replies.
+            </p>
+
+            <div class="tool-features-list font-mono">
+              <div class="feat-item">✓ Multi-Platform Dispatch (IG, X, Threads)</div>
+              <div class="feat-item">✓ Algorithm-Cracking Velocity Scorer (0-100)</div>
+              <div class="feat-item">✓ Anti-Bot Stealth Emulation & Discovery Feeds</div>
+              <div class="feat-item">✓ Dynamic Hashtag Ranking Matrix</div>
+            </div>
+
+            <div class="tool-card-footer">
+              <button class="btn-launch-glow btn-card-launch" onclick="switchView('workspace')">
+                <span>Launch Workspace</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- TOOL 2: TRENDFORECASTER AI (COMING SOON) -->
+          <div class="tool-card glass-card teaser-card">
+            <div class="tool-card-head">
+              <div class="tool-icon-wrap tool-radar">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a10 10 0 0 1 10 10"></path><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+              </div>
+              <div class="tool-status-badge badge-coming font-mono">COMING SOON</div>
+            </div>
+
+            <div class="tool-title-wrap">
+              <h3 class="tool-name">TrendForecaster AI™</h3>
+              <div class="tool-tagline">48-Hour Viral Wave & Audio Predictor</div>
+            </div>
+
+            <p class="tool-desc">
+              Monitors rising sound clips, emerging visual templates, and topic clusters before they saturate. Delivers predictive alerts on what will trend across short-form video in the next 48 hours.
+            </p>
+
+            <div class="tool-features-list font-mono">
+              <div class="feat-item">⏳ Breakout Audio Detection</div>
+              <div class="feat-item">⏳ Viral Hook Archetype Matcher</div>
+              <div class="feat-item">⏳ Cross-Platform Wave Correlator</div>
+            </div>
+
+            <div class="tool-card-footer">
+              <span class="btn-ghost-disabled font-mono">In Model Training</span>
+            </div>
+          </div>
+
+          <!-- TOOL 3: AUTODM FUNNEL AI (COMING SOON) -->
+          <div class="tool-card glass-card teaser-card">
+            <div class="tool-card-head">
+              <div class="tool-icon-wrap tool-funnel">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+              </div>
+              <div class="tool-status-badge badge-coming font-mono">COMING SOON</div>
+            </div>
+
+            <div class="tool-title-wrap">
+              <h3 class="tool-name">AutoDM Funnel AI™</h3>
+              <div class="tool-tagline">Conversational Lead Qualifier & Outbound Engine</div>
+            </div>
+
+            <p class="tool-desc">
+              Converts top-funnel post engagements into qualified pipeline. Seamlessly transitions comment replies into private, authentic DM conversations that drive conversions and demo bookings.
+            </p>
+
+            <div class="tool-features-list font-mono">
+              <div class="feat-item">⏳ Trigger-Word Direct Message Routing</div>
+              <div class="feat-item">⏳ Natural Persona Context Memory</div>
+              <div class="feat-item">⏳ CRM & Webhook Integration</div>
+            </div>
+
+            <div class="tool-card-footer">
+              <span class="btn-ghost-disabled font-mono">In Architecture Review</span>
+            </div>
+          </div>
+
+          <!-- TOOL 4: MEMESYNTH VISION AI (COMING SOON) -->
+          <div class="tool-card glass-card teaser-card">
+            <div class="tool-card-head">
+              <div class="tool-icon-wrap tool-synth">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path></svg>
+              </div>
+              <div class="tool-status-badge badge-coming font-mono">COMING SOON</div>
+            </div>
+
+            <div class="tool-title-wrap">
+              <h3 class="tool-name">MemeSynth Vision AI™</h3>
+              <div class="tool-tagline">High-Retention Cultural Visual Generator</div>
+            </div>
+
+            <p class="tool-desc">
+              Synthesizes platform-native image memes, carousel slides, and infographic visual cards customized to community humor, technical niches, and trending discourse.
+            </p>
+
+            <div class="tool-features-list font-mono">
+              <div class="feat-item">⏳ Native Visual Aesthetic Synthesis</div>
+              <div class="feat-item">⏳ Contextual Meme Injection</div>
+              <div class="feat-item">⏳ Multi-Frame Carousel Generator</div>
+            </div>
+
+            <div class="tool-card-footer">
+              <span class="btn-ghost-disabled font-mono">Research Prototype</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- COMING SOON BANNER -->
+        <div class="hub-roadmap-banner glass-card">
+          <div class="banner-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          </div>
+          <div class="banner-content">
+            <div class="banner-title font-display">More Autonomous Growth Tools Coming Soon</div>
+            <div class="banner-sub">We are expanding the suite with automated audience listening, shadowban telemetry, and multi-account load balancing.</div>
+          </div>
+          <button class="btn-action-ghost" onclick="switchView('workspace')">Open Active Workspace ↗</button>
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <footer class="master-footer glass-card">
+        <div class="footer-top">
+          <div class="footer-brand">
+            <div class="footer-brand-title">KINETIC FEED</div>
+            <p class="footer-brand-desc">Autonomous multi-platform social media marketing engine powered by Google Gemini Vision.</p>
+          </div>
+          <div class="footer-tech-badges font-mono">
+            <span class="badge-tech">Gemini 3.6 Flash</span>
+            <span class="badge-tech">Playwright Stealth</span>
+            <span class="badge-tech">SSE Stream</span>
+            <span class="badge-tech">Liquid Glass UI</span>
+          </div>
+        </div>
+        <div class="footer-bottom font-mono">
+          <span>&copy; 2026 Kinetic Feed. All rights reserved.</span>
+          <span>Engine Status: <strong class="text-emerald">OPERATIONAL</strong></span>
+        </div>
+      </footer>
+    </main>
+
+    <!-- ================================================================= -->
+    <!-- VIEW 2: COMMAND CENTER WORKSPACE (REAL-TIME DASHBOARD)              -->
+    <!-- ================================================================= -->
+    <main id="view-workspace" class="view-container">
+      <!-- REAL METRICS BAR (STRICTLY ACCURATE DATA) -->
+      <section class="metrics-strip">
+        <div class="metric-box glass-card card-cyan">
+          <div class="metric-top">
+            <span class="metric-title">POSTS ANALYZED</span>
+            <div class="metric-symbol sym-cyan">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            </div>
+          </div>
+          <div class="metric-num font-mono" id="stat-posts-analyzed">0</div>
+          <div class="metric-footnote font-mono" id="stat-analyzed-note">Real-time scan counter</div>
+        </div>
+
+        <div class="metric-box glass-card card-violet">
+          <div class="metric-top">
+            <span class="metric-title">COMMENTS POSTED</span>
+            <div class="metric-symbol sym-violet">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            </div>
+          </div>
+          <div class="metric-num font-mono" id="stat-ai-comments">0</div>
+          <div class="metric-footnote font-mono" id="stat-comments-note">Verified live submissions</div>
+        </div>
+
+        <div class="metric-box glass-card card-emerald">
+          <div class="metric-top">
+            <span class="metric-title">ACTIVE CAMPAIGNS</span>
+            <div class="metric-symbol sym-emerald">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </div>
+          </div>
+          <div class="metric-num font-mono" id="stat-active-campaigns">0</div>
+          <div class="metric-footnote font-mono" id="stat-workers-state">Standby — Workers Idle</div>
+        </div>
+
+        <div class="metric-box glass-card card-amber">
+          <div class="metric-top">
+            <span class="metric-title">REACH MULTIPLIER</span>
+            <div class="metric-symbol sym-amber">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            </div>
+          </div>
+          <div class="metric-num font-mono" id="stat-reach-boost">0.0x</div>
+          <div class="metric-footnote font-mono">Organic engagement score</div>
+        </div>
+      </section>
+
+      <!-- WORKSPACE 2-COLUMN GRID -->
+      <div class="workspace-grid">
+        <!-- LEFT COLUMN: PLATFORM SESSIONS & CAMPAIGN CONTROLLER -->
+        <div class="col-left">
+          <!-- PLATFORM SESSION AUTHENTICATION STATUS -->
+          <div class="glass-card panel-card">
+            <div class="panel-header">
+              <div class="panel-heading">
+                <h2 class="panel-title">PLATFORM AUTHENTICATION</h2>
+                <span class="panel-caption">Verify live logged-in browser accounts</span>
+              </div>
+              <span class="badge-status font-mono" id="session-summary-badge">3 Nodes</span>
+            </div>
+
+            <div class="platform-cards-stack">
+              <!-- INSTAGRAM NODE -->
+              <div class="platform-session-card" id="session-node-instagram">
+                <div class="node-icon-row">
+                  <div class="node-brand">
+                    <div class="brand-avatar ig-aura">
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
+                    </div>
+                    <div>
+                      <div class="platform-name">Instagram</div>
+                      <div class="platform-handle font-mono" id="ig-handle-display">Not verified</div>
+                    </div>
+                  </div>
+                  <div class="session-status-badge status-unverified" id="ig-status-badge">
+                    <span class="status-pip"></span>
+                    <span class="status-text font-mono" id="ig-status-text">UNCHECKED</span>
+                  </div>
+                </div>
+
+                <div class="session-details-row font-mono" id="ig-details-text">
+                  Click 'Verify Session' to test stored credentials.
+                </div>
+
+                <div class="session-btn-row">
+                  <button class="btn-action-ghost" id="btn-verify-ig" onclick="verifyPlatform('instagram')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.3"/></svg>
+                    <span>Verify Session</span>
+                  </button>
+                  <button class="btn-action-ghost btn-login" onclick="triggerPlatformLogin('instagram')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+                    <span>Open Login</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- TWITTER (X) NODE -->
+              <div class="platform-session-card" id="session-node-twitter">
+                <div class="node-icon-row">
+                  <div class="node-brand">
+                    <div class="brand-avatar x-aura">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+                    </div>
+                    <div>
+                      <div class="platform-name">Twitter / X</div>
+                      <div class="platform-handle font-mono" id="x-handle-display">Not verified</div>
+                    </div>
+                  </div>
+                  <div class="session-status-badge status-unverified" id="x-status-badge">
+                    <span class="status-pip"></span>
+                    <span class="status-text font-mono" id="x-status-text">UNCHECKED</span>
+                  </div>
+                </div>
+
+                <div class="session-details-row font-mono" id="x-details-text">
+                  Click 'Verify Session' to test stored credentials.
+                </div>
+
+                <div class="session-btn-row">
+                  <button class="btn-action-ghost" id="btn-verify-x" onclick="verifyPlatform('twitter')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.3"/></svg>
+                    <span>Verify Session</span>
+                  </button>
+                  <button class="btn-action-ghost btn-login" onclick="triggerPlatformLogin('twitter')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+                    <span>Open Login</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- THREADS NODE -->
+              <div class="platform-session-card" id="session-node-threads">
+                <div class="node-icon-row">
+                  <div class="node-brand">
+                    <div class="brand-avatar threads-aura">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm3.4 13.6a4.8 4.8 0 0 1-3.4 1.4c-2.6 0-4.6-2-4.6-4.6s2-4.6 4.6-4.6c2.4 0 4.1 1.7 4.1 4.2v.7a1.6 1.6 0 0 1-3.2 0v-.7a2.5 2.5 0 0 0-5 0 2.5 2.5 0 0 0 2.5 2.5c.8 0 1.6-.4 2-1"></path></svg>
+                    </div>
+                    <div>
+                      <div class="platform-name">Meta Threads</div>
+                      <div class="platform-handle font-mono" id="threads-handle-display">Not verified</div>
+                    </div>
+                  </div>
+                  <div class="session-status-badge status-unverified" id="threads-status-badge">
+                    <span class="status-pip"></span>
+                    <span class="status-text font-mono" id="threads-status-text">UNCHECKED</span>
+                  </div>
+                </div>
+
+                <div class="session-details-row font-mono" id="threads-details-text">
+                  Click 'Verify Session' to test stored credentials.
+                </div>
+
+                <div class="session-btn-row">
+                  <button class="btn-action-ghost" id="btn-verify-threads" onclick="verifyPlatform('threads')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.3"/></svg>
+                    <span>Verify Session</span>
+                  </button>
+                  <button class="btn-action-ghost btn-login" onclick="triggerPlatformLogin('threads')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+                    <span>Open Login</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CAMPAIGN CONTROLLER -->
+          <div class="glass-card panel-card highlight-glow" id="campaign-controller-panel">
+            <div class="panel-header">
+              <div class="panel-heading">
+                <h2 class="panel-title text-gradient-cyan">CAMPAIGN CONTROLLER</h2>
+                <span class="panel-caption">Single authoritative launcher for PulsePilot AI™</span>
+              </div>
+              <span class="badge-controller">ACTIVE DISPATCHER</span>
+            </div>
+
+            <form id="campaign-master-form" onsubmit="executeCampaign(event)">
+              <!-- PLATFORM SELECTOR PILLS -->
+              <div class="form-group">
+                <label class="form-label">TARGET PLATFORM</label>
+                <div class="segmented-control">
+                  <label class="segment-tab">
+                    <input type="radio" name="platform" value="instagram" checked onchange="onPlatformChange()" />
+                    <span class="segment-pill">Instagram</span>
+                  </label>
+                  <label class="segment-tab">
+                    <input type="radio" name="platform" value="twitter" onchange="onPlatformChange()" />
+                    <span class="segment-pill">Twitter / X</span>
+                  </label>
+                  <label class="segment-tab">
+                    <input type="radio" name="platform" value="threads" onchange="onPlatformChange()" />
+                    <span class="segment-pill">Threads</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- TARGETING STRATEGY TABS -->
+              <div class="form-group">
+                <label class="form-label">TARGETING STRATEGY</label>
+                <div class="sub-tabs">
+                  <button type="button" class="sub-tab active" id="tab-trending-mode" onclick="setTargetingMode('trending')">
+                    <span>🔥 Algorithmic Discovery</span>
+                  </button>
+                  <button type="button" class="sub-tab" id="tab-direct-links-mode" onclick="setTargetingMode('direct_links')">
+                    <span>🔗 Custom Post Links</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- DISCOVERY MODE SETTINGS -->
+              <div id="container-trending-mode" class="mode-container">
+                <div class="form-row">
+                  <div class="form-group flex-1">
+                    <label class="form-label">DISCOVERY FEED TYPE</label>
+                    <select class="form-select font-mono" id="campaign-feed-mode">
+                      <option value="trending">🔥 Explore & Trending (Max Impressions)</option>
+                      <option value="for_you">🎯 Algorithmic For You</option>
+                      <option value="feed">📰 Standard Following Feed</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- ALGORITHM-CRACKED HASHTAG INPUT & INTELLIGENCE -->
+                <div class="form-group">
+                  <div class="label-row">
+                    <label class="form-label">ENTER TARGET HASHTAGS</label>
+                    <span class="badge-tag-intel font-mono">ALGORITHM CRACKED</span>
+                  </div>
+                  <input type="text" class="form-input font-mono" id="campaign-topic" placeholder="e.g. #AIRevolution, #TechTrends, #GrowthHacking" oninput="onHashtagInput(this.value)" />
+                  <span class="form-hint font-mono">Separate multiple hashtags with commas. The algorithm prioritizes top breakout velocity posts.</span>
+
+                  <!-- DYNAMIC ALGORITHM-CRACKED SUGGESTIONS -->
+                  <div class="algo-hashtags-container">
+                    <div class="algo-hashtags-title font-mono">
+                      <span>⚡ SUGGESTED HIGH-VIRAL HASHTAGS:</span>
+                      <span class="algo-reload-btn" onclick="refreshHashtagSuggestions()" title="Refresh Suggestions">↻ Refresh</span>
+                    </div>
+                    <div class="algo-chips-wrap" id="algo-hashtag-chips">
+                      <!-- Dynamic chips injected via JS -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- DIRECT POST LINKS TEXTAREA -->
+              <div id="container-direct-links-mode" class="mode-container hidden">
+                <div class="form-group">
+                  <div class="textarea-label-row">
+                    <label class="form-label">PASTE TARGET POST URLS</label>
+                    <span class="links-counter font-mono" id="direct-links-count">0 links parsed</span>
+                  </div>
+                  <textarea 
+                    class="form-textarea font-mono" 
+                    id="direct-urls-input" 
+                    rows="4" 
+                    placeholder="Paste single link or multiple links separated by new line:&#10;https://www.instagram.com/p/DF123abc/&#10;https://x.com/username/status/1830123456789&#10;https://www.threads.net/@user/post/DA456xyz/"
+                    oninput="updateLinksCount()"
+                  ></textarea>
+                  <div class="textarea-helper font-mono" id="direct-links-breakdown">
+                    One URL per line. Comments will be placed sequentially on each target.
+                  </div>
+                </div>
+              </div>
+
+              <!-- COMMENT QUOTA SLIDER -->
+              <div class="form-group" id="quota-slider-group">
+                <div class="slider-title-row">
+                  <label class="form-label">COMMENT QUOTA TARGET</label>
+                  <span class="font-mono text-cyan slider-readout" id="target-quota-readout">6 comments</span>
+                </div>
+                <input type="range" class="glass-slider" id="target-quota-slider" min="1" max="25" value="6" oninput="onQuotaSliderChange(this.value)" />
+              </div>
+
+              <!-- ACTION BUTTONS -->
+              <div class="controller-actions">
+                <button type="submit" class="btn-launch-glow" id="btn-master-launch">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                  <span>LAUNCH PULSEPILOT CAMPAIGN</span>
+                </button>
+                <button type="button" class="btn-stop-all" onclick="stopActiveCampaigns()">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"></rect></svg>
+                  <span>Halt All</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: REAL-TIME AI ACTIVITY STREAM & FIXED-BOTTOM LOG TERMINAL -->
+        <div class="col-right" id="col-right-root">
+          <!-- REAL TIME AI ACTIVITY STREAM -->
+          <div class="glass-card panel-card stream-card">
+            <div class="panel-header">
+              <div class="panel-heading">
+                <div class="heading-with-dot">
+                  <span class="pulse-indicator pulse-cyan"></span>
+                  <h2 class="panel-title">REAL-TIME AI ACTIVITY STREAM</h2>
+                </div>
+                <span class="panel-caption">Live post screenshots, Gemini Vision comments & reach scores</span>
+              </div>
+              <span class="badge-count font-mono" id="feed-count-badge">0 Actions</span>
+            </div>
+
+            <div class="activity-scroll-area" id="activity-scroll-container">
+              <!-- Dynamic Real Cards injected here -->
+              <div class="empty-stream-state" id="stream-empty-state">
+                <div class="radar-scan-anim">
+                  <div class="radar-sweep"></div>
+                  <div class="radar-crosshair"></div>
+                </div>
+                <div class="empty-title">Awaiting Live Engagement</div>
+                <p class="empty-desc">
+                  No active campaign running. Launch PulsePilot AI™ via the controller or verify platform sessions to start streaming live AI interactions!
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- LIVE DAEMON LOG TERMINAL (FIXED BOTTOM MATCHING CAMPAIGN CONTROLLER) -->
+          <div class="glass-card panel-card terminal-card" id="terminal-card-fixed">
+            <div class="term-chrome">
+              <div class="term-pips">
+                <span class="pip pip-close"></span>
+                <span class="pip pip-min"></span>
+                <span class="pip pip-max"></span>
+              </div>
+              <div class="term-title font-mono">pulsepilot_daemon.stdout</div>
+              <div class="term-tools">
+                <button class="btn-term-tool font-mono" onclick="clearTerminal()">CLEAR</button>
+              </div>
+            </div>
+            <div class="term-viewport font-mono" id="terminal-viewport">
+              <div class="term-row text-cyan">[SYSTEM] PulsePilot AI™ Orchestration Engine Online.</div>
+              <div class="term-row text-muted">[ALGORITHM] Velocity filter active (Threshold: 68/100).</div>
+              <div class="term-row text-muted">[STATUS] Connected to local event bus. Awaiting dispatch.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- SETTINGS MODAL -->
+  <div class="modal-backdrop" id="settings-modal">
+    <div class="modal-box glass-card">
+      <div class="modal-header">
+        <h3 class="modal-title font-mono">SYSTEM CONFIGURATION</h3>
+        <button class="btn-close-modal" onclick="closeSettings()">&times;</button>
+      </div>
+      <form onsubmit="saveConfiguration(event)">
+        <div class="form-group">
+          <label class="form-label">GOOGLE GEMINI API KEY</label>
+          <input type="password" class="form-input font-mono" id="cfg-api-key" placeholder="AQ.Ab8RN..." />
+          <span class="form-hint">Stored locally in your .env file</span>
+        </div>
+        <div class="form-row">
+          <div class="form-group flex-1">
+            <label class="form-label">GEMINI MODEL</label>
+            <input type="text" class="form-input font-mono" id="cfg-model" value="gemini-3.6-flash" />
+          </div>
+          <div class="form-group flex-1">
+            <label class="form-label">MIN DELAY (S)</label>
+            <input type="number" class="form-input font-mono" id="cfg-min-delay" value="3" min="1" />
+          </div>
+          <div class="form-group flex-1">
+            <label class="form-label">MAX DELAY (S)</label>
+            <input type="number" class="form-input font-mono" id="cfg-max-delay" value="6" min="2" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-action-ghost" onclick="closeSettings()">Cancel</button>
+          <button type="submit" class="btn-launch-glow btn-save-cfg">Save & Apply</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- API KEY ERROR / REPLACEMENT REQUIRED MODAL -->
+  <div class="modal-backdrop" id="api-error-modal">
+    <div class="modal-box glass-card modal-alert-card">
+      <div class="modal-header">
+        <div class="modal-alert-header">
+          <div class="alert-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f43f5e" stroke-width="2.2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+          <div>
+            <h3 class="modal-alert-title font-mono">GEMINI API KEY REQUIRED</h3>
+            <span class="modal-alert-subtitle">Automated commenting paused — Fallback comments disabled</span>
+          </div>
+        </div>
+        <button class="btn-close-modal" onclick="closeApiErrorModal()">&times;</button>
+      </div>
+      
+      <div class="modal-alert-content">
+        <div class="error-banner-callout font-mono" id="modal-api-error-detail">
+          401 UNAUTHENTICATED: Request had invalid authentication credentials.
+        </div>
+        <p class="modal-alert-expl">
+          Per your instruction, generic fallback comments have been disabled. When Gemini Vision encounters an authentication failure or quota limit, campaigns pause immediately and notify you here.
+        </p>
+        
+        <form onsubmit="saveApiKeyFromModal(event)">
+          <div class="form-group">
+            <label class="form-label">ENTER OR REPLACE GEMINI API KEY</label>
+            <input type="password" class="form-input font-mono" id="modal-api-key-input" placeholder="AIzaSy..." required />
+            <div class="key-help-row font-mono">
+              <span>Standard keys start with <code class="code-pill">AIzaSy...</code></span>
+              <a href="https://aistudio.google.com/app/apikey" target="_blank" class="link-cyan">Get Free Key from Google AI Studio ↗</a>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn-action-ghost" onclick="closeApiErrorModal()">Dismiss</button>
+            <button type="submit" class="btn-launch-glow btn-save-key">Update Key & Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
