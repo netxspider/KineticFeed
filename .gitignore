@@ -1,0 +1,44 @@
+# Kinetic Feed - Git Ignore
+
+# User Sessions & Browser Data
+user_data/
+user_data/*
+user_data_*
+*.session
+
+# Secrets & Environment Variables
+.env
+.env.local
+.env.*.local
+
+# Python Cache & Bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Logs & Screenshots
+*.log
+scratch/
+debug_screenshots/
+stats.json
+*.png
